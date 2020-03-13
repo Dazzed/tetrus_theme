@@ -1,0 +1,35 @@
+
+<div class="" style="text-align: center">
+  	{% assign collection = collections['all'] %}
+
+  <h2>Available {{  collection.title }}</h2>
+<!-- 	{{ collection.products.size }} -->
+</div>
+  <ul  style="display: flex" >
+  {% for product in collection.products %}
+      {% unless section.settings.hide_soldout != false and product.available != true  %}
+        <li style="flex-direction: column; width: 25%; padding:10px 20px; text-align: center;">
+          <a style="color:{{ settings.link_color }};font-weight: bold;" href="{{ product.url }}">{{ product.title }} {{ product.img }} - {{ product.price | money}} 
+            {% if product.available != true %}
+            (SOLD OUT)
+            {% endif %}
+          </a>
+<!--           <span style="display: block;text-align: left;padding-top: 20px;"> {{ product.content }}</span> -->
+        </li>
+    {% endunless %}
+  {% endfor %}
+  </ul>
+</div>
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+  	{
+      "type": "checkbox",
+      "id": "hide_soldout",
+      "label": "Hide Sold our Products",
+      "default": false
+    }
+	]
+  }
+{% endschema %}
